@@ -1,0 +1,119 @@
+/**
+ * @file DebugDemo.ino
+ * @version 1.0
+ *
+ * @section License
+ * Copyright (C) 2015-2016, Mikael Patel
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * @section Description
+ * Arduino Debug demonstration.
+ */
+
+// Define to remove debug statements
+// #define NDEBUG
+
+#include <Debug.h>
+
+namespace A {
+
+  // Single breakpoint
+  void a()
+  {
+    BREAKPOINT();
+  }
+
+  // Multiple breakpoints with call between
+  void b()
+  {
+    BREAKPOINT();
+    a();
+    BREAKPOINT();
+  }
+
+  // Register variable, conditional observation and breakpoint
+  void c()
+  {
+    static int i = 0;
+    REGISTER(i);
+    OBSERVE_IF(i < 1, i);
+    OBSERVE_IF(i > 5, i);
+    BREAK_IF(i == 10);
+    i += 1;
+    ASSERT(i < 15);
+  }
+
+  long e(int i)
+  {
+    REGISTER(i);
+    CHECK_STACK();
+    if (i > 0) return (e(i - 1) * i);
+    return (1);
+  }
+};
+
+const size_t BUF_MAX = 128;
+char* buf = NULL;
+
+void setup()
+{
+  // Set the debug stream
+  Serial.begin(57600);
+  DEBUG_STREAM(Serial);
+
+  // Register global data (for this scope)
+  REGISTER(buf);
+  Serial.println(F("setup running"));
+
+  // Contains a breakpoint. Check the memory. No heap used
+  A::a();
+
+  // Allocate from heap
+  buf = (char*) malloc(BUF_MAX);
+  memset(buf, 0xa5, BUF_MAX);
+
+  // Contains several breakpoints. Check the memory again. Heap is now used
+  A::b();
+
+  // Free allocated buffer. Check memory and heap again
+  free(buf);
+  A::a();
+}
+
+void loop()
+{
+  // Local variable
+  static uint8_t i = 0;
+
+  // Register all the variables the debug handler should know about
+  REGISTER(buf);
+  REGISTER(BUF_MAX);
+  REGISTER(Serial);
+  REGISTER(i);
+
+  Serial.println(F("loop running"));
+
+  // Contains both breakpoints and observations. Check variables
+  A::c();
+
+  // Leak memory and run function with memory check
+  buf = (char*) malloc(BUF_MAX);
+  ASSERT(buf != NULL);
+  memset(buf, 0xa5, BUF_MAX);
+  Serial.print(i++);
+  Serial.print(':');
+  Serial.println(A::e(5));
+
+  // Keep up with the user
+  delay(500);
+}
+
