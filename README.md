@@ -15,27 +15,48 @@ File>Sketchbook menu.
 ## Commands
 ### Sketch Commands
 #### ASSERT(cond)
+Check assert condition. If false the debug shell is called. The sketch
+cannot continue.
 #### BREAKPOINT()
+The debug shell is called.
 #### BREAK_IF(cond)
+The debug shell is called if the condition is true.
 #### CHECK_STACK(room)
+Check that there is room (bytes) on the stack. If false the debug
+shell is called.
 #### DEBUG_STREAM(dev)
-#### OBSERVE_IF(cond,expr)
+Use the given stream device for debug session. Typically Serial.
 #### OBSERVE(expr)
+Print the expression to the debug stream.
+#### OBSERVE_IF(cond,expr)
+Print the expression to the debug stream if the condition is true.
 #### REGISTER(var)
+Register a variable for access from the debug shell.
 ### Debug Shell Commands
 #### ?VARIABLE
+Print variable address and value.
 #### backtrace
+Print simple call-stack.
 #### commands
+Print list of commands.
 #### data
+Print contents of data area, i.e. global variables.
 #### go
+Leave debug shell and continue execution of sketch.
 #### heap
+Print contents of heap, i.e. dynamic allocated data.
 #### help
+Print list of commands.
 #### memory
+Print memory status.
 #### quit
+Stop sketch.
 #### stack
+Print contents of stack, i.e. call frames, arguments, return addresses.
 #### variables
+Print list of registered variables.
 #### where
-
+Print source code file and line where debug shell was called.
 
 
 
