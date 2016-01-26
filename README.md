@@ -12,29 +12,29 @@ libraries directory. Rename from Arduino-Debug-master to Debug.
 The Debug library and exampls should be found in the Arduino IDE
 File>Sketchbook menu.
 
-## Debug Sketch Command
-### ASSERT(cond)
-### BREAKPOINT()
-### BREAK_IF(cond)
-### CHECK_STACK(room)
-### DEBUG_STREAM(dev)
-### OBSERVE_IF(cond,expr)
-### OBSERVE(expr)
-### REGISTER(var)
-
-## Debug Shell Commands
-### ?VARIABLE
-### backtrace
-### commands
-### data
-### go
-### heap
-### help
-### memory
-### quit
-### stack
-### variables
-### where
+## Commands
+### Sketch Commands
+#### ASSERT(cond)
+#### BREAKPOINT()
+#### BREAK_IF(cond)
+#### CHECK_STACK(room)
+#### DEBUG_STREAM(dev)
+#### OBSERVE_IF(cond,expr)
+#### OBSERVE(expr)
+#### REGISTER(var)
+### Debug Shell Commands
+#### ?VARIABLE
+#### backtrace
+#### commands
+#### data
+#### go
+#### heap
+#### help
+#### memory
+#### quit
+#### stack
+#### variables
+#### where
 
 
 
