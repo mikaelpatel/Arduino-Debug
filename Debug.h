@@ -126,11 +126,7 @@ public:
   void observe_at(const char* file,
 		  int line,
 		  const char* func,
-		  str_P expr)
-  {
-    UNUSED(file);
-    printf(PSTR("Debug::observe_at:%s:%d:%S="), func, line, expr);
-  }
+		  str_P expr);
 
   /**
    * Stop debug handler. Returns true(1) if successful otherwise false(0).
@@ -366,8 +362,7 @@ protected:
     if (UNLIKELY(cond)) {						\
       debug.observe_at(__FILE__,__LINE__, __PRETTY_FUNCTION__,		\
 		       F(# expr));					\
-      debug.print(expr);						\
-      debug.println();							\
+      debug.println(expr);						\
     }									\
   } while (0)
 

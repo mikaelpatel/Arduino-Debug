@@ -19,7 +19,7 @@
 #include "Debug.h"
 
 #define ARCH "AVR"
-#define VERSION "1.0a2"
+#define VERSION "1.0a3"
 
 Debug debug __attribute__((weak));
 
@@ -72,6 +72,22 @@ Debug::check_stack(int room)
   int HEAPEND = (__brkval == 0 ? (int) &__heap_start : (int) __brkval);
   int STACKSTART = (int) &marker;
   return (STACKSTART > HEAPEND + room);
+}
+
+void
+Debug::observe_at(const char* file,
+		  int line,
+		  const char* func,
+		  str_P expr)
+{
+  UNUSED(file);
+  print(F("Debug::observe_at:"));
+  print(func);
+  print(':');
+  print(line);
+  print(':');
+  print(expr);
+  print('=');
 }
 
 bool
