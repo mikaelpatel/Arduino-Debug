@@ -13,6 +13,7 @@ The Debug library and exampls should be found in the Arduino IDE
 File>Sketchbook menu.
 
 ## Commands
+
 ### Sketch Commands
 Command | Description
 --------|------------
@@ -24,6 +25,7 @@ DEBUG_STREAM(dev) | Use the given stream device for debug session. Typically Ser
 OBSERVE(expr) | Print the expression to the debug stream.
 OBSERVE_IF(cond,expr) | Print the expression to the debug stream if the condition is true.
 REGISTER(var) | Register a variable for access from the debug shell.
+
 ### Debug Shell Commands
 Debug shell commands may be abbreviated.
 Command | Description
