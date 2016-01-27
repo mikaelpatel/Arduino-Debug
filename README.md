@@ -27,7 +27,6 @@ OBSERVE_IF(cond,expr) | Print the expression to the debug stream if the conditio
 REGISTER(var) | Register a variable for access from the debug shell.
 
 ### Debug Shell Commands
-Debug shell commands may be abbreviated.
 Command | Description
 --------|------------
 ?VARIABLE | Print variable address and value.
