@@ -18,6 +18,9 @@
 
 #include "Debug.h"
 
+#define ARCH "AVR"
+#define VERSION "1.0a1"
+
 Debug debug __attribute__((weak));
 
 extern int __heap_start, *__brkval;
@@ -32,7 +35,10 @@ Debug::begin(Stream* dev,
   m_dev = dev;
   DATAEND =(int) &__heap_start;
   DATASIZE = DATAEND - RAMSTART;
-  print(F("Arduino Debug 1.0 Copyright (C) 2016\nDebug::begin:"));
+  print(F("Arduino Debug (" ARCH ") " VERSION
+	  ", Copyright (C) 2015-2016, Mikael Patel\n"
+	  "For help, type \"help\".\n"
+	  "Debug::begin:"));
   run(file, line, func);
   return (true);
 }
@@ -92,14 +98,13 @@ Debug::run(const char* file, int line, const char* func, str_P expr)
   if (func != NULL) println();
 
   uint16_t marker = 0xA5A5;
-  str_P prompt = F("Debug> ");
+  str_P prompt = F("(debug) ");
 
   while (1) {
     const size_t BUF_MAX = 32;
     char buf[BUF_MAX];
     char* bp = buf;
     int c;
-
     print(prompt);
     while ((c = read()) != '\n') {
       if (c > 0) {
@@ -112,7 +117,7 @@ Debug::run(const char* file, int line, const char* func, str_P expr)
     }
     println();
     *bp = 0;
-    size_t len = strlen(buf);
+    size_t len = bp - buf;
     if (len == 0) continue;
 
     if (!strncmp_P(buf, PSTR("go"), len)) return;
@@ -257,32 +262,32 @@ Debug::do_print_commands()
 {
   static const char help[] PROGMEM =
 #if !defined(DEBUG_NO_LOOKUP_VARIABLES)
-    "?VARIABLE -- print variable(s)\n"
+    "?VARIABLE -- Print variable(s)\n"
 #endif
 #if !defined(DEBUG_NO_BACKTRACE)
-    "backtrace -- print call stack\n"
+    "backtrace -- Print call stack\n"
 #endif
 #if !defined(DEBUG_NO_PRINT_DATA)
-    "data -- print data\n"
+    "data -- Print data\n"
 #endif
-    "go -- return to sketch\n"
+    "go -- Return to sketch\n"
 #if !defined(DEBUG_NO_PRINT_HEAP)
-    "heap -- print heap\n"
+    "heap -- Print heap\n"
 #endif
 #if !defined(DEBUG_NO_MEMORY_USAGE)
-    "memory -- print memory usage\n"
+    "memory -- Print memory usage\n"
 #endif
 #if !defined(DEBUG_NO_QUIT)
-    "quit -- exit sketch\n"
+    "quit -- Exit sketch\n"
 #endif
 #if !defined(DEBUG_NO_PRINT_STACK)
-    "stack -- print stack\n"
+    "stack -- Print stack\n"
 #endif
 #if !defined(DEBUG_NO_PRINT_REGISTER)
-    "variables -- print variables\n"
+    "variables -- Print variables\n"
 #endif
 #if !defined(DEBUG_NO_WHERE)
-    "where -- location in source code\n"
+    "where -- Location in source code\n"
 #endif
     ;
   print((str_P) help);
