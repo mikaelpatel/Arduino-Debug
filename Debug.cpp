@@ -51,7 +51,7 @@ Debug::assert(const char* file,
 {
   print(F("Debug::assert"));
   run(file, line, func, cond);
-  delay(1000);
+  end();
   exit(0);
 }
 
@@ -78,6 +78,8 @@ bool
 Debug::end()
 {
   if (m_dev == NULL) return (false);
+  println(F("Debug::end"));
+  delay(1000);
   m_dev = NULL;
   return (true);
 }
@@ -178,7 +180,7 @@ Debug::run(const char* file, int line, const char* func, str_P expr)
 
 #if !defined(DEBUG_NO_QUIT)
     if (!strncmp_P(buf, PSTR("quit"), len)) {
-      delay(1000);
+      end();
       exit(0);
     }
 #endif
