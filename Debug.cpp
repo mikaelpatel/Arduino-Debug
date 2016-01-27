@@ -19,7 +19,7 @@
 #include "Debug.h"
 
 #define ARCH "AVR"
-#define VERSION "1.0a1"
+#define VERSION "1.0a2"
 
 Debug debug __attribute__((weak));
 
@@ -197,9 +197,9 @@ Debug::run(const char* file, int line, const char* func, str_P expr)
 #endif
 
 #if !defined(DEBUG_NO_LOOKUP_VARIABLES)
-    if (*buf == '?') {
+    if (*buf == '?' || *buf == '@' ) {
       const char* name = buf + 1;
-      if (!do_lookup_variables(name)) {
+      if (!do_lookup_variables(name, *buf == '@')) {
 	print(name);
 	println(F(": unknown variable"));
       }
@@ -229,12 +229,13 @@ Debug::do_backtrace(const char* func)
 
 #if !defined(DEBUG_NO_LOOKUP_VARIABLES)
 bool
-Debug::do_lookup_variables(const char* name)
+Debug::do_lookup_variables(const char* name, bool is_pointer)
 {
   bool found = false;
   for (Variable* vp = m_var; vp != NULL; vp = vp->m_next) {
     if (strcmp_P(name, (const char*) vp->m_name) == 0) {
-      vp->print();
+      if (!is_pointer || (vp->m_size == sizeof(void*)))
+	vp->print(is_pointer);
       found = true;
     }
   }
@@ -265,6 +266,7 @@ Debug::do_print_commands()
   static const char help[] PROGMEM =
 #if !defined(DEBUG_NO_LOOKUP_VARIABLES)
     "?VARIABLE -- Print variable(s)\n"
+    "@VARIABLE -- Print pointer variable(s)\n"
 #endif
 #if !defined(DEBUG_NO_BACKTRACE)
     "backtrace -- Print call stack\n"
@@ -335,7 +337,7 @@ Debug::do_print_variables()
 #endif
 
 void
-Debug::Variable::print()
+Debug::Variable::print(bool is_pointer)
 {
   debug.print(m_func);
   debug.print(':');
@@ -343,20 +345,33 @@ Debug::Variable::print()
   debug.print('@');
   debug.print(F("0x"));
   debug.print((int) m_ref, HEX);
-  if (m_size == 1) {
-    debug.print('=');
-    debug.println(*((uint8_t*) m_ref));
-  }
-  else if (m_size == 2) {
-    debug.print('=');
-    debug.println(*((int*) m_ref));
+  if (m_size == sizeof(void*) && is_pointer) {
+    int* ptr = *((int**) m_ref);
+    debug.print(F("=>"));
+    debug.dump((uint16_t) ptr, ptr, 16);
   }
   else {
-    debug.print('[');
-    debug.print(m_size);
-    debug.print(F("]:"));
-    if (m_size > 16) debug.println();
-    debug.dump((uint16_t) m_ref, m_ref, m_size);
+    if (m_size == 1) {
+      debug.print('=');
+      debug.print(*((uint8_t*) m_ref));
+      debug.print(F(" (0x"));
+      debug.print(*((uint8_t*) m_ref), HEX);
+      debug.println(')');
+    }
+    else if (m_size == 2) {
+      debug.print('=');
+      debug.print(*((int*) m_ref));
+      debug.print(F(" (0x"));
+      debug.print(*((uint16_t*) m_ref), HEX);
+      debug.println(')');
+    }
+    else {
+      debug.print('[');
+      debug.print(m_size);
+      debug.print(F("]:"));
+      if (m_size > 16) debug.println();
+      debug.dump((uint16_t) m_ref, m_ref, m_size);
+    }
   }
 }
 

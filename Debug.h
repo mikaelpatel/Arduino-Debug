@@ -64,9 +64,9 @@ public:
   {}
 
   /**
-   * Start debug handler with given iostream device, file name, line
-   * number and function name. The macro DEBUG_STREAM(dev) should be
-   * used instead. Returns true(1) if successful otherwise false(0).
+   * Start debug handler with given stream, file name, line number and
+   * function name. The macro DEBUG_STREAM(dev) should be used
+   * instead. Returns true(1) if successful otherwise false(0).
    * @param[in] dev stream for debug handler.
    * @param[in] file name.
    * @param[in] line number.
@@ -169,9 +169,10 @@ public:
     }
 
     /**
-     * Print information about variable on debug iostream device.
+     * Print information about variable on debug stream.
+     * @param[in] is_pointer flag (default false).
      */
-    void print();
+    void print(bool is_pointer = false);
 
   protected:
     friend class Debug;
@@ -222,8 +223,9 @@ protected:
    * Lookup given variable name in register. Return true(1) if found
    * otherwise false(0).
    * @param[in] name of variable.
+   * @param[in] is_pointer flag (default false).
    */
-  bool do_lookup_variables(const char* name);
+  bool do_lookup_variables(const char* name, bool is_pointer = false);
 #endif
 
 #if !defined(DEBUG_NO_MEMORY_USAGE)
@@ -296,7 +298,7 @@ protected:
 /**
  * Start the debug command handler with information about the file,
  * line number and function name.
- * @param[in] dev iostream device.
+ * @param[in] dev stream device.
  */
 #define DEBUG_STREAM(dev)						\
   do {									\
@@ -354,7 +356,7 @@ protected:
   } while (0)
 
 /**
- * Print the given expression to the debug iostream if the condition
+ * Print the given expression to the debug stream if the condition
  * is true.
  * @param[in] cond condition.
  * @param[in] expr expression.
@@ -370,7 +372,7 @@ protected:
   } while (0)
 
 /**
- * Print the given expression to the debug iostream.
+ * Print the given expression to the debug stream.
  * @param[in] expr expression.
  */
 #define OBSERVE(expr) OBSERVE_IF(expr,true)

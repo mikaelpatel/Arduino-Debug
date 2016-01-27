@@ -30,6 +30,7 @@ REGISTER(var) | Register a variable for access from the debug shell.
 Command | Description
 --------|------------
 ?VARIABLE | Print variable address and value.
+@VARIABLE | Print pointer variable address and reference value.
 backtrace | Print simple call-stack.
 commands | Print list of commands (see also help).
 data | Print contents of data area, i.e. global variables.
