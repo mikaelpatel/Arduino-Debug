@@ -17,6 +17,27 @@
  *
  * @section Description
  * Arduino Debug demonstration.
+ *
+ * @section Footprint
+ * Arduino 1.6.7, Arduino Mega2560
+ *
+ * Debug statements:
+ * ASSERT()			2
+ * BREAKPOINT/IF()		4
+ * CHECK_STACK()		1
+ * DEBUG_STREAM()		1
+ * OBSERVE/IF()			2
+ * REGISTER()			7
+ * Total:			17
+ *
+ * Program storage space and dynamic memory.
+ * Without debug statements;	3630/259 bytes
+ * With debug statements:	7836/417 bytes
+ * Increased size:		4206/158 bytes
+ *
+ * NB: Increased size includes debug shell and all file and
+ * function name strings. Arduino preprocessor uses full path
+ * of file name (see debug shell command where).
  */
 
 // Define to remove debug statements
