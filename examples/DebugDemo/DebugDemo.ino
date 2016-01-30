@@ -89,6 +89,7 @@ void setup()
 {
   // Set the debug stream
   Serial.begin(57600);
+  while (!Serial);
   DEBUG_STREAM(Serial);
 
   // Register global data (for this scope)
