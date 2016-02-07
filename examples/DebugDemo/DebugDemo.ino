@@ -90,11 +90,18 @@ void setup()
   // Set the debug stream
   Serial.begin(57600);
   while (!Serial);
+  Serial.println(F("DebugDemo::started"));
+
+#if defined(ARDUINO_AVR_MEGA2560)
+  Serial1.begin(57600);
+  DEBUG_STREAM(Serial1);
+#else
   DEBUG_STREAM(Serial);
+#endif
 
   // Register global data (for this scope)
-  REGISTER(buf);
   Serial.println(F("setup running"));
+  REGISTER(buf);
 
   // Contains a breakpoint. Check the memory. No heap used
   A::a();

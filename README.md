@@ -3,7 +3,7 @@
 This library provides a simple on-target debugger for Arduino sketches.
 Debug command are added directly to the sketch. A debugger command
 shell is started on break-points and assertions.
-![screenshot](https://dl.dropboxusercontent.com/u/993383/Cosa/screenshots/Screenshot%20from%202016-01-27%2016%3A12%3A31.png)
+![screenshot](https://dl.dropboxusercontent.com/u/993383/Cosa/screenshots/Screenshot%20from%202016-02-07%2021%3A48%3A33.png)
 
 ## Install
 
