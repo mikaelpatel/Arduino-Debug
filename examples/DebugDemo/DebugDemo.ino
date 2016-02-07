@@ -45,6 +45,9 @@
 
 #include <Debug.h>
 
+// Define to allow debug shell on Serial1 (Arduino Mega2560)
+#define USE_SERIAL1
+
 namespace A {
 
   // Single breakpoint
@@ -92,7 +95,7 @@ void setup()
   while (!Serial);
   Serial.println(F("DebugDemo::started"));
 
-#if defined(ARDUINO_AVR_MEGA2560)
+#if defined(ARDUINO_AVR_MEGA2560) && defined(USE_SERIAL1)
   Serial1.begin(57600);
   DEBUG_STREAM(Serial1);
 #else
