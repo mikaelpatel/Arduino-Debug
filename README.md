@@ -8,10 +8,10 @@ shell is started on break-points and assertions.
 ## Install
 
 Download and unzip the Arduino-Debug library into your sketchbook
-libraries directory. Rename from Arduino-Debug-master to Debug.
+libraries directory. Rename from Arduino-Debug-master to Arduino-Debug.
 
-The Debug library and exampls should be found in the Arduino IDE
-File>Sketchbook menu.
+The Debug library and examples should be found in the Arduino IDE
+File>Examples menu.
 
 ## Commands
 

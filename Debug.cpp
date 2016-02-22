@@ -124,7 +124,9 @@ Debug::run(const char* file, int line, const char* func, str_P expr)
     char* bp = buf;
     int c;
     print(prompt);
-    while ((c = read()) != '\n') {
+    while (1) {
+      c = read();
+      if (c == '\r' || c == '\n') break;
       if (c > 0) {
 	*bp++ = c;
 	print((char) c);
