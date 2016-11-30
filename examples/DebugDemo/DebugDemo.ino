@@ -46,7 +46,7 @@
 #include <Debug.h>
 
 // Define to allow debug shell on Serial1 (Arduino Mega2560)
-#define USE_SERIAL1
+// #define USE_SERIAL1
 
 namespace A {
 
@@ -80,6 +80,7 @@ namespace A {
   {
     REGISTER(i);
     CHECK_STACK();
+    OBSERVE(i);
     if (i > 0) return (e(i - 1) * i);
     return (1);
   }
@@ -148,4 +149,3 @@ void loop()
   // Keep up with the user
   delay(500);
 }
-

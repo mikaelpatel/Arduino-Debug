@@ -370,7 +370,7 @@ protected:
  * Print the given expression to the debug stream.
  * @param[in] expr expression.
  */
-#define OBSERVE(expr) OBSERVE_IF(expr,true)
+#define OBSERVE(expr) OBSERVE_IF(true,expr)
 
 /**
  * Register the given variable in the debug handler. The debug handler
