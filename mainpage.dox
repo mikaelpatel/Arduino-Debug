@@ -1,6 +1,6 @@
 /** @mainpage Arduino-Debug
 
-This library provides a simple on-target debugger for Arduino sketches.
+This library provides a simple on-target sketch debugger for Arduino.
 
 Version: 1.0.1
 */
