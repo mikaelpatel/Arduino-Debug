@@ -43,6 +43,3 @@ quit | Stop sketch.
 stack | Print contents of stack, i.e. call frames, arguments, return addresses.
 variables | Print list of registered variables.
 where | Print source code file and line where debug shell was called.
-
-
-
